@@ -3,7 +3,7 @@ FROM quay.io/ukhomeofficedigital/openjdk8:v1.1.0
 
 ENV USER pttg
 ENV GROUP pttg
-ENV NAME pttg-fs-api
+ENV NAME pttg-fs-service
 
 ENV JAR_PATH build/libs
 ARG VERSION
@@ -11,7 +11,7 @@ ARG VERSION
 WORKDIR /app
 
 RUN groupadd -r ${GROUP} && \
-    useradd -r -g ${USER} ${GROUP} -d /app && \
+    useradd -r ${USER} -g ${GROUP} -d /app && \
     mkdir -p /app && \
     chown -R ${USER}:${GROUP} /app
 
