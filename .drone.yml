@@ -1,32 +1,5 @@
 pipeline:
 
-  experiment:
-    image: quay.io/ukhomeofficedigital/kd:v0.2.2
-    environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
-      - KUBE_NAMESPACE=pt-i-dev
-      - ENVIRONMENT=dev
-      - VERSION=build-${DRONE_BUILD_NUMBER}
-      - KUBE_SERVER_DEV=https://kube-dev.dsp.notprod.homeoffice.gov.uk
-    commands:
-      - echo 'in experiment step (kd)'
-    when:
-      event: push
-
-  experiment-success:
-    image: quay.io/ukhomeofficedigital/kd:v0.2.2
-    commands:
-      - echo 'experiment step (kd) passed'
-    when:
-      status: success
-
-  experiment-failure:
-    image: quay.io/ukhomeofficedigital/kd:v0.2.2
-    commands:
-      - echo 'experiment step (kd) failed'
-    when:
-      status: failure
-
   build:
     privileged: true
     image: quay.io/ukhomeofficedigital/openjdk8:v1.0.0
