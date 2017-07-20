@@ -45,7 +45,6 @@ pipeline:
     commands:
       - docker build -t pttg-fs-service .
     when:
-      branch: [master, refs/tags/*]
       event: [push, pull_request, tag]
 
   push-image-to-quay:
@@ -59,7 +58,6 @@ pipeline:
       - docker push quay.io/ukhomeofficedigital/pttg-fs-api:latest
       - docker push quay.io/ukhomeofficedigital/pttg-fs-api:build-${DRONE_BUILD_NUMBER}
     when:
-      branch: master
       event: [push, pull_request]
 
   push-image-to-quay-with-git-tag:
