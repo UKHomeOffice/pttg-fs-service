@@ -37,6 +37,42 @@ pipeline:
     when:
       event: [push, pull_request, tag]
 
+  create-docker-image:
+    privileged: true
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker build -t pttg-fs-service .
+    when:
+      branch: [master, refs/tags/*]
+      event: [push, pull_request, tag]
+
+  push-image-to-quay:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
+      - docker tag pttg-fs-service quay.io/ukhomeofficedigital/pttg-fs-api:latest
+      - docker tag pttg-fs-service quay.io/ukhomeofficedigital/pttg-fs-api:build-${DRONE_BUILD_NUMBER}
+      - docker push quay.io/ukhomeofficedigital/pttg-fs-api:latest
+      - docker push quay.io/ukhomeofficedigital/pttg-fs-api:build-${DRONE_BUILD_NUMBER}
+    when:
+      branch: master
+      event: [push, pull_request]
+
+  push-image-to-quay-with-git-tag:
+    image: docker:1.11
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
+      - docker tag pttg-fs-service quay.io/ukhomeofficedigital/pttg-fs-api:${DRONE_TAG}-${DRONE_BUILD_NUMBER}
+      - docker push quay.io/ukhomeofficedigital/pttg-fs-api:${DRONE_TAG}-${DRONE_BUILD_NUMBER}
+    when:
+      event: tag
+
 services:
   dind:
     image: docker:1.11-dind
