@@ -27,7 +27,16 @@ pipeline:
     when:
       status: failure
 
-  
+  build:
+    privileged: true
+    image: quay.io/ukhomeofficedigital/openjdk8:v1.0.0
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+    commands:
+      - ./gradlew build
+    when:
+      event: [push, pull_request, tag]
+
 services:
   dind:
     image: docker:1.11-dind
