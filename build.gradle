@@ -57,7 +57,7 @@ setProperty('sourceCompatibility', '1.8')
 setProperty('targetCompatibility', '1.8')
 
 task('wrapper', type: Wrapper) {
-    gradleVersion = '2.13'
+    gradleVersion = '3.3'
 }
 
 tasks.withType(Test) {
