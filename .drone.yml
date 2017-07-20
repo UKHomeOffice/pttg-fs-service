@@ -13,6 +13,20 @@ pipeline:
     when:
       event: push
 
+  experiment-success:
+    image: quay.io/ukhomeofficedigital/kd:v0.2.2
+    commands:
+      - echo 'experiment step (kd) passed'
+    when:
+      status: success
+
+  experiment-failure:
+    image: quay.io/ukhomeofficedigital/kd:v0.2.2
+    commands:
+      - echo 'experiment step (kd) failed'
+    when:
+      status: failure
+
   
 services:
   dind:
