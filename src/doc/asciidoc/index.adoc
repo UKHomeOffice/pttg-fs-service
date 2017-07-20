@@ -1,0 +1,263 @@
+= Financial Status API Guide
+include::common/config.adoc[]
+
+= API Overview
+
+== Introduction
+This document describes the Financial Status API, a REST service that exchanges JSON over HTTP and exposes information
+relating to an individual's financial status. The information is obtained from Barclays Bank and is available for
+current accounts held in the applicant's name.
+
+This API can be used to:
+
+ . Calculate the minimum balance requirement for a Tier 2, 4 or 5 application
+ . Check whether an individual meets the <<Financial Status>> requirements for a Tier 2, 4 or 5 application by consulting the
+ daily closing balance of their Barclays current account and comparing it against a minimum balance requirement
+
+This guide has three main sections:
+
+ . <<API Overview>> - Information, guidance, and conventions that apply across this API, such as access control or the use of HTTP verbs.
+ . <<Resources>> - Details of the resources exposed through this API and the operations available against those resources.
+ . <<Supplementary>> - Supporting information such as contact details and key terms.
+
+For further assistance see the <<Contact>> section.
+
+== Versioning
+This is version 1 of the income proving API. In this version all resource URIs are prefixed with:
+
+`/pttg/financialstatus/v1/`
+
+== Schema
+include::common/schema.adoc[]
+
+== HTTP Conventions
+include::common/http-conventions.adoc[]
+
+== Headers
+include::common/headers.adoc[]
+
+== Errors
+include::common/errors.adoc[]
+
+== Hypermedia
+include::common/hypermedia.adoc[]
+
+== Authentication and Authorization
+include::common/auth.adoc[]
+
+'''
+<<<
+
+= Resources
+
+== Financial Status
+
+The Financial Status resource conveys whether an individual meets the financial status requirements for a
+Tier 2, 4 or 5 application.
+
+=== Check the Financial Status of an individual
+
+This version can check the financial status for applicants with a Barclays current account in their name only. The sort
+code, account number, and date of birth must precisely match the account record at Barclays. The daily closing balances
+for the given account on each day in the date range (inclusive) will be checked against the supplied `minimum`. The
+result will be a `pass` only when the daily closing balance is greater than or equal to the minimum on each of the days.
+
+==== Example request
+
+include::{snippets}/financial-status/http-request.adoc[]
+
+include::{snippets}/financial-status/curl-request.adoc[]
+
+
+==== Request Parameters
+
+include::{snippets}/financial-status/path-parameters.adoc[]
+
+include::{snippets}/financial-status/request-parameters.adoc[]
+
+
+==== `Pass` response
+
+include::{snippets}/financial-status/http-response.adoc[]
+
+==== `Pass` response content
+
+include::{snippets}/financial-status/response-fields.adoc[]
+
+
+==== `No pass` response
+
+When the account's daily balance does not meet or exceed the required `minimum` on any of the days in the date range,
+the response will include the date of the lowest balance that occurs during the date range, and the balance on
+that date.
+
+include::{snippets}/financial-status-fail/http-response.adoc[]
+
+==== `No pass` response content
+
+include::{snippets}/financial-status-fail/response-fields.adoc[]
+
+
+==== `Not enough data` response
+
+If the account's daily balance records do not cover the requested period, then the response will indicate that the
+check did not pass and supply a `failureReason` entry showing that the cause was the record count, and the number of
+records that were actually available:
+
+include::{snippets}/financial-status-not-enough-data/http-response.adoc[]
+
+==== `Not enough data` response content
+
+include::{snippets}/financial-status-not-enough-data/response-fields.adoc[]
+
+
+==== `No matching account` response
+
+If the supplied account number, sort code, and date of birth does not correspond to any active account the response will
+be a 404 with the following response body:
+
+include::{snippets}/financial-status-no-account/http-response.adoc[]
+
+
+== Maintenance
+
+== Threshold calculation for Tier 2
+
+Calculates the maintenance threshold value for applicants based on applicant type and possible dependants.
+
+=== Example request
+
+include::{snippets}/threshold-calculation-tier2/http-request.adoc[]
+
+include::{snippets}/threshold-calculation-tier2/curl-request.adoc[]
+
+
+=== Request Parameters
+
+include::{snippets}/threshold-calculation-tier2/request-parameters.adoc[]
+
+
+=== Example of a successful response
+
+include::{snippets}/threshold-calculation-tier2/http-response.adoc[]
+
+
+=== Threshold response content
+
+include::{snippets}/threshold-calculation-tier2/response-fields.adoc[]
+
+
+
+== Threshold calculation for Tier 4
+
+Calculates the maintenance threshold value for student based on student type, course length, tuition and accommodation
+fees and any costs already paid.
+
+=== Example request
+
+include::{snippets}/threshold-calculation-tier4/http-request.adoc[]
+
+include::{snippets}/threshold-calculation-tier4/curl-request.adoc[]
+
+
+=== Request Parameters
+
+include::{snippets}/threshold-calculation-tier4/request-parameters.adoc[]
+
+
+=== Example of a successful response
+
+include::{snippets}/threshold-calculation-tier4/http-response.adoc[]
+
+
+=== Threshold response content
+
+include::{snippets}/threshold-calculation-tier4/response-fields.adoc[]
+
+
+== Threshold calculation for Tier 5
+
+Calculates the maintenance threshold value for applicants based on applicant type and possible dependants.
+
+=== Example request
+
+include::{snippets}/threshold-calculation-tier5/http-request.adoc[]
+
+include::{snippets}/threshold-calculation-tier5/curl-request.adoc[]
+
+
+=== Request Parameters
+
+include::{snippets}/threshold-calculation-tier5/request-parameters.adoc[]
+
+
+=== Example of a successful response
+
+include::{snippets}/threshold-calculation-tier5/http-response.adoc[]
+
+
+=== Threshold response content
+
+include::{snippets}/threshold-calculation-tier5/response-fields.adoc[]
+
+== Condition Codes Tier 4 (general student type)
+
+Calculates the condition codes for applicants, partner and dependants based on student type, possible dependants,
+course dates, course type and whether the institution is a recognised body / Higher Education Institute or not.
+
+=== Example request
+
+include::{snippets}/condition-codes/tier4-general-student-type/http-request.adoc[]
+
+include::{snippets}/condition-codes/tier4-general-student-type/curl-request.adoc[]
+
+=== Request Parameters
+
+include::{snippets}/condition-codes/tier4-general-student-type/request-parameters.adoc[]
+
+
+=== Example of a successful response
+
+include::{snippets}/condition-codes/tier4-general-student-type/http-response.adoc[]
+
+=== Response content
+
+include::{snippets}/condition-codes/tier4-general-student-type/response-fields.adoc[]
+
+== Condition Codes Tier 4 (non-general student type)
+
+Non-general student-type covers those on Doctorate Extension Schemes, Post Graduate Doctor Dentist and Student Union Sabbatical Officer.
+
+Calculates the condition codes for applicants, partner and dependants based on student type, possible dependants,
+course dates, course type and whether the institution is a recognised body / Higher Education Institute or not.
+
+=== Example request
+
+include::{snippets}/condition-codes/tier4-non-general-student-type/http-request.adoc[]
+
+include::{snippets}/condition-codes/tier4-non-general-student-type/curl-request.adoc[]
+
+=== Request Parameters
+
+include::{snippets}/condition-codes/tier4-non-general-student-type/request-parameters.adoc[]
+
+
+=== Example of a successful response
+
+include::{snippets}/condition-codes/tier4-non-general-student-type/http-response.adoc[]
+
+=== Response content
+
+include::{snippets}/condition-codes/tier4-non-general-student-type/response-fields.adoc[]
+
+
+<<<
+= Supplementary
+
+== Support
+include::common/contact.adoc[]
+
+include::common/licence.adoc[]
+
+== Glossary
+include::common/glossary.adoc[]

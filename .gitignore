@@ -1,0 +1,5 @@
+.idea
+.DS_Store
+target/
+build/
+financial-status-service-api.log
