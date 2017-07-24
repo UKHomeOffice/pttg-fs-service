@@ -9,16 +9,16 @@ import org.springframework.web.client.RestTemplate
 import scala.util.{Failure, Success, Try}
 
 /**
-  * HealthIndicator contributing to the healthcheck endpoint that is used for readiness checks.
+  * HealthIndicator contributing to the health check endpoint that is used for readiness checks.
   */
 @Component
 class BarclaysConnectionHealth @Autowired()(rest: RestTemplate,
-                                            @Value("${barclays.service.url}") val bankService: String) extends HealthIndicator {
+                                            @Value("${barclays.balance.resource}") val balanceResource: String) extends HealthIndicator {
 
   val LOGGER: Logger = LoggerFactory.getLogger(classOf[BarclaysConnectionHealth])
 
   // todo Update for real Barclays API
-  val bankHealthUrl = s"$bankService/financialstatus/v1/01061600030000/balances?dateOfBirth=1975-10-10&toDate=2016-06-01&fromDate=2016-05-10"
+  val bankHealthUrl = s"$balanceResource/01061600030000/balances?dateOfBirth=1975-10-10&toDate=2016-06-01&fromDate=2016-05-10"
 
   override def health(): Health = {
 
@@ -28,8 +28,8 @@ class BarclaysConnectionHealth @Autowired()(rest: RestTemplate,
 
     // todo check for failure status codes
     response match {
-      case Success(response) => Health.up.withDetail("The Barclays API is responding:", "OK").build
-      case Failure(exception) => Health.down.withDetail("While trying to read Barclays API, received :", exception.getMessage).build
+      case Success(_) => Health.up.withDetail("The Barclays Service is responding:", "OK").build
+      case Failure(exception) => Health.down.withDetail("While trying to read Barclays Service, received :", exception.getMessage).build
     }
   }
 }
