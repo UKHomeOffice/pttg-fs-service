@@ -31,7 +31,7 @@ logger("org.mongodb.driver", WARN)
 logger("org.apache.http", WARN) // DEBUG level will show the repeated healthcheck calls
 
 
-root(INFO, ["STDOUT"])
+root(DEBUG, ["STDOUT"])
 
 // Check config file every 30 seconds and reload if changed
 scan("30 seconds")

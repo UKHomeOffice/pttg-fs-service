@@ -39,6 +39,15 @@ class UserConsentService @Autowired()(val userConsentStatusChecker: UserConsentS
 
   private val LOGGER = LoggerFactory.getLogger(classOf[UserConsentService])
 
+  def anon(accountNumber: Optional[String]): String = {
+    if (accountNumber.isPresent) {
+      val a = accountNumber.get()
+      a.take(2) + "####" + a.takeRight(2)
+    } else {
+      "<not available>"
+    }
+  }
+
   @RequestMapping(value = Array("{sortCode:[0-9]+|[0-9-]+}/{accountNumber:[0-9]+}/consent"),
     method = Array(RequestMethod.GET), produces = Array("application/json"))
   def bankConsent(@PathVariable(value = "sortCode") sortCode: Optional[String],
@@ -47,9 +56,12 @@ class UserConsentService @Autowired()(val userConsentStatusChecker: UserConsentS
                   @CookieValue(value = "kc-access") kcToken: Optional[String]
                  ): ResponseEntity[BankConsentResponse] = {
 
+
     val cleanSortCode: Option[String] = if (sortCode.isPresent) Option(sortCode.get.replace("-", "")) else None
 
     val (userProfile, userId) = getUserProfile(kcToken)
+
+    LOGGER.debug("User Consent requested by {} for account {} and sort code {}", userId, anon(accountNumber), sortCode.get())
 
     val auditEventId = nextId
     auditSearchParams(auditEventId, cleanSortCode, accountNumber, userProfile)
@@ -63,6 +75,7 @@ class UserConsentService @Autowired()(val userConsentStatusChecker: UserConsentS
         case None => buildErrorResponse(headers, "404", "404", HttpStatus.NOT_FOUND)
       }
     }
+
     response match {
       case Success(success) => success
       case Failure(exception: HttpClientErrorException) => buildErrorResponse(headers, serviceMessages.REST_API_CLIENT_ERROR,
