@@ -4,3 +4,4 @@ target/
 build/
 financial-status-service-api.log
 out/
+.gradle/
