@@ -6,6 +6,8 @@ import org.springframework.boot.actuate.health.{Health, HealthIndicator}
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 
+import scala.util.{Failure, Success, Try}
+
 /**
   * HealthIndicator contributing to the health check endpoint that is used for readiness checks.
   */
@@ -19,22 +21,20 @@ class BarclaysConnectionHealth @Autowired()(rest: RestTemplate,
   val bankHealthUrl = s"$balanceResource/01061600030000/balances?dateOfBirth=1975-10-10&toDate=2016-06-01&fromDate=2016-05-10"
 
   override def health(): Health = {
-    LOGGER.debug("Health check: bypassing check on: {}", bankHealthUrl)
-    Health.up.withDetail("Bypassing healthcheck:", "OK").build
-//    val response = Try {
-//      rest.getForEntity(bankHealthUrl, classOf[String])
-//    }
-//
-//    // todo check for failure status codes
-//    response match {
-//      case Success(_) => {
-//        LOGGER.debug("Health check: succeeded to get a response from: {}", bankHealthUrl)
-//        Health.up.withDetail("The Barclays Service is responding:", "OK").build
-//      }
-//      case Failure(exception) => {
-//        LOGGER.debug("Health check: failed to get a response from: {}", bankHealthUrl)
-//        Health.down.withDetail("While trying to read Barclays Service, received :", exception.getMessage).build
-//      }
-//    }
+
+    val response = Try {
+      rest.getForEntity(bankHealthUrl, classOf[String])
+    }
+
+    // todo check for failure status codes
+    response match {
+      case Success(_) => {
+        Health.up.withDetail("The Barclays Service is responding:", "OK").build
+      }
+      case Failure(exception) => {
+        LOGGER.debug("Health check: failed to get a response from: {}", bankHealthUrl)
+        Health.down.withDetail("While trying to read Barclays Service, received :", exception.getMessage).build
+      }
+    }
   }
 }
