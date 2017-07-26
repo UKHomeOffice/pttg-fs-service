@@ -28,8 +28,14 @@ class BarclaysConnectionHealth @Autowired()(rest: RestTemplate,
 
     // todo check for failure status codes
     response match {
-      case Success(_) => Health.up.withDetail("The Barclays Service is responding:", "OK").build
-      case Failure(exception) => Health.down.withDetail("While trying to read Barclays Service, received :", exception.getMessage).build
+      case Success(_) => {
+        LOGGER.debug("Health check: succeeded to get a response from: {}", bankHealthUrl)
+        Health.up.withDetail("The Barclays Service is responding:", "OK").build
+      }
+      case Failure(exception) => {
+        LOGGER.debug("Health check: failed to get a response from: {}", bankHealthUrl)
+        Health.down.withDetail("While trying to read Barclays Service, received :", exception.getMessage).build
+      }
     }
   }
 }
