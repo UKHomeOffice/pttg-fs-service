@@ -51,7 +51,7 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
-      - git clone https://gitlab.digital.homeoffice.gov.uk/pttg/kube-pttg-fs-service.git
+      - git clone https://github.com/UKHomeOffice/kube-pttg-fs-service.git
     when:
       event: [push, tag, deployment]
 
