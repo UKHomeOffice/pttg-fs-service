@@ -26,11 +26,11 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
-      - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} docker.digital.homeoffice.gov.uk
-      - docker tag pttg-fs-service docker.digital.homeoffice.gov.uk/pttg/pttg-fs-service:latest
-      - docker tag pttg-fs-service docker.digital.homeoffice.gov.uk/pttg/pttg-fs-service:build-${DRONE_BUILD_NUMBER}
-      - docker push docker.digital.homeoffice.gov.uk/pttg/pttg-fs-service:latest
-      - docker push docker.digital.homeoffice.gov.uk/pttg/pttg-fs-service:build-${DRONE_BUILD_NUMBER}
+      - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
+      - docker tag pttg-fs-service quay.io/pttg/pttg-fs-service:latest
+      - docker tag pttg-fs-service quay.io/pttg/pttg-fs-service:build-${DRONE_BUILD_NUMBER}
+      - docker push quay.io/pttg/pttg-fs-service:latest
+      - docker push quay.io/pttg/pttg-fs-service:build-${DRONE_BUILD_NUMBER}
     when:
       branch: master
       event: push
@@ -40,9 +40,9 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
     commands:
-      - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} docker.digital.homeoffice.gov.uk
-      - docker tag pttg-fs-service docker.digital.homeoffice.gov.uk/pttg/pttg-fs-service:${DRONE_TAG}
-      - docker push docker.digital.homeoffice.gov.uk/pttg/pttg-fs-service:${DRONE_TAG}
+      - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
+      - docker tag pttg-fs-service quay.io/pttg/pttg-fs-service:${DRONE_TAG}
+      - docker push quay.io/pttg/pttg-fs-service:${DRONE_TAG}
     when:
       event: tag
 
