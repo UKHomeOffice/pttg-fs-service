@@ -9,8 +9,8 @@ import uk.gov.digital.ho.proving.financialstatus.bank.BarclaysBankService
 @Service
 class UserConsentStatusChecker @Autowired()(barclaysBankService: BarclaysBankService) {
 
-  def checkUserConsent(account: Account, dob: LocalDate, userId: String) = {
-    barclaysBankService.checkUserConsent(account, dob, userId)
+  def checkUserConsent(account: Account, fromDate: LocalDate, toDate: LocalDate, dob: LocalDate, userId: String) = {
+    barclaysBankService.checkUserConsent(account, fromDate, toDate, dob, userId)
   }
 
 }
