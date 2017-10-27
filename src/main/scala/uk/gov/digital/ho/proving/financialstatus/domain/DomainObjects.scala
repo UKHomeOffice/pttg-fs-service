@@ -30,4 +30,4 @@ case class ThresholdResult(threshold: BigDecimal, cappedValues: Option[CappedVal
 
 case class UserConsentResult(status: String, description: String)
 
-case class UserConsent(accountId: String, sortCode: String, accountNumber: String, result: UserConsentResult)
+case class UserConsent(accountId: String, sortCode: String, accountNumber: String, fromBalanceDate: LocalDate, toBalanceDate: LocalDate, result: UserConsentResult)
