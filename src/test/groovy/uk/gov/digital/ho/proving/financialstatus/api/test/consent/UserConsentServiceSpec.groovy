@@ -72,7 +72,7 @@ class UserConsentServiceSpec extends Specification {
         def toDate = LocalDate.of(2017,1,28)
         def dob = LocalDate.of(2000,1,1)
 
-        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode, accountNumber, dob.toString(), new UserConsentResult("INITIATED", "INITIATED"))
+        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode+accountNumber, sortCode, accountNumber, fromDate, toDate, new UserConsentResult("INITIATED", "INITIATED"))
 
         expect:
         def response = callApi(sortCode,accountNumber,fromDate,toDate,dob)
@@ -90,7 +90,7 @@ class UserConsentServiceSpec extends Specification {
         def toDate = LocalDate.of(2017,1,28)
         def dob = LocalDate.of(2000,1,1)
 
-        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode, accountNumber, dob.toString(), new UserConsentResult("PENDING", "PENDING"))
+        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode+accountNumber, sortCode, accountNumber, fromDate, toDate, new UserConsentResult("PENDING", "PENDING"))
 
         expect:
         def response = callApi(sortCode,accountNumber,fromDate,toDate,dob)
@@ -108,7 +108,7 @@ class UserConsentServiceSpec extends Specification {
         def toDate = LocalDate.of(2017,1,28)
         def dob = LocalDate.of(2000,1,1)
 
-        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode, accountNumber, dob.toString(), new UserConsentResult("SUCCESS", "SUCCESS"))
+        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode+accountNumber, sortCode, accountNumber, fromDate, toDate, new UserConsentResult("SUCCESS", "SUCCESS"))
 
         expect:
         def response = callApi(sortCode,accountNumber,fromDate, toDate, dob)
@@ -126,7 +126,7 @@ class UserConsentServiceSpec extends Specification {
         def toDate = LocalDate.of(2017,1,28)
         def dob = LocalDate.of(2000,1,1)
 
-        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode, accountNumber, dob.toString(), new UserConsentResult("FAILURE", "FAILURE"))
+        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode+accountNumber, sortCode, accountNumber, fromDate, toDate, new UserConsentResult("FAILURE", "FAILURE"))
 
         expect:
         def response = callApi(sortCode,accountNumber,fromDate,toDate,dob)
@@ -144,7 +144,7 @@ class UserConsentServiceSpec extends Specification {
         def toDate = LocalDate.of(2017,1,28)
         def dob = LocalDate.of(2000,1,1)
 
-        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode, accountNumber, dob.toString(), new UserConsentResult("INVALID", "INVALID"))
+        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode+accountNumber, sortCode, accountNumber, fromDate, toDate, new UserConsentResult("INVALID", "INVALID"))
 
         expect:
         def response = callApi(sortCode,accountNumber,fromDate,toDate,dob)
