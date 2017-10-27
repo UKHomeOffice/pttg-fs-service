@@ -17,18 +17,22 @@ class BarclaysBankService @Autowired()(val objectMapper: ObjectMapper,
                                        @Value("${barclays.balance.resource}") val balanceResource: String) {
 
   def checkUserConsent(account: Account,
+                       fromDate: LocalDate,
+                       toDate: LocalDate,
                        dob: LocalDate,
                        userId: String): UserConsent = {
 
+    val formattedFromDate = fromDate.format(ISO_LOCAL_DATE)
+    val formattedToDate = toDate.format(ISO_LOCAL_DATE)
     val formattedDob = dob.format(ISO_LOCAL_DATE)
-    val url = bankConsentUrl(account, formattedDob)
+    val url = bankConsentUrl(account, formattedFromDate, formattedToDate, formattedDob)
     val httpResponse = httpUtils.performRequest(url, userId, generateRequestId(CONSENT))
 
     objectMapper.readValue(httpResponse.body, classOf[UserConsent])
   }
 
-  def bankConsentUrl(account: Account, dob: String): String =
-    s"""$consentResource/${account.sortCode}${account.accountNumber}/consent?dateOfBirth=$dob"""
+  def bankConsentUrl(account: Account, fromDate: String, toDate: String, dob: String): String =
+    s"""$consentResource/${account.sortCode}${account.accountNumber}/consent?fromDate=$fromDate&toDate=$toDate&dateOfBirth=$dob"""
 
   def fetchAccountDailyBalances(account: Account,
                                 fromDate: LocalDate,

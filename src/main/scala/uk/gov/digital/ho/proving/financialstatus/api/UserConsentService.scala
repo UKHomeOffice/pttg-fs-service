@@ -52,6 +52,8 @@ class UserConsentService @Autowired()(val userConsentStatusChecker: UserConsentS
     method = Array(RequestMethod.GET), produces = Array("application/json"))
   def bankConsent(@PathVariable(value = "sortCode") sortCode: Optional[String],
                   @PathVariable(value = "accountNumber") accountNumber: Optional[String],
+                  @RequestParam(value = "toDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) toDate: Optional[LocalDate],
+                  @RequestParam(value = "fromDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) fromDate: Optional[LocalDate],
                   @RequestParam(value = "dob") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) dob: Optional[LocalDate],
                   @CookieValue(value = "kc-access") kcToken: Optional[String]
                  ): ResponseEntity[BankConsentResponse] = {
@@ -67,7 +69,7 @@ class UserConsentService @Autowired()(val userConsentStatusChecker: UserConsentS
     auditSearchParams(auditEventId, cleanSortCode, accountNumber, userProfile)
 
     val response = Try {
-      val consent = checkConsent(cleanSortCode, accountNumber, dob, userId)
+      val consent = checkConsent(cleanSortCode, accountNumber, fromDate, toDate, dob, userId)
 
       consent match {
         case Some(result) => auditSearchResult(auditEventId, result.toString, userProfile)
@@ -86,15 +88,19 @@ class UserConsentService @Autowired()(val userConsentStatusChecker: UserConsentS
 
   def checkConsent(sortCode: Option[String],
                    accountNumber: Option[String],
+                   fromDate: Option[LocalDate],
+                   toDate: Option[LocalDate],
                    dob: Option[LocalDate],
                    userId: String): Option[UserConsent] = {
 
     val consent = for {sCode <- sortCode
                        accountNo <- accountNumber
+                       fromDate <- fromDate
+                       toDate <- toDate
                        dateOfBirth <- dob} yield {
 
       val bankAccount = Account(sCode, accountNo)
-      val response = userConsentStatusChecker.checkUserConsent(bankAccount, dateOfBirth, userId)
+      val response = userConsentStatusChecker.checkUserConsent(bankAccount, fromDate, toDate, dateOfBirth, userId)
       response
     }
     consent

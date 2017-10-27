@@ -53,9 +53,11 @@ class UserConsentServiceSpec extends Specification {
 
     def url = ConsentUtils.consentUrl
 
-    def callApi(sortCode, accountNumber, dob) {
+    def callApi(sortCode, accountNumber, fromDate, toDate, dob) {
         def response = mockMvc.perform(
             get(String.format(url, sortCode, accountNumber))
+                .param("fromDate", fromDate.toString())
+                .param("toDate", toDate.toString())
                 .param("dob", dob.toString())
         )
         response.andDo(MockMvcResultHandlers.print())
@@ -66,12 +68,14 @@ class UserConsentServiceSpec extends Specification {
 
         def sortCode = "010616"
         def accountNumber = "00005000"
+        def fromDate = LocalDate.of(2017,1,1)
+        def toDate = LocalDate.of(2017,1,28)
         def dob = LocalDate.of(2000,1,1)
 
-        1 * mockBarclaysBankService.checkUserConsent(_, _, _) >> new UserConsent(sortCode, accountNumber, dob.toString(), new UserConsentResult("INITIATED", "INITIATED"))
+        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode+accountNumber, sortCode, accountNumber, fromDate, toDate, new UserConsentResult("INITIATED", "INITIATED"))
 
         expect:
-        def response = callApi(sortCode,accountNumber,dob)
+        def response = callApi(sortCode,accountNumber,fromDate,toDate,dob)
         response.andExpect(status().is(200))
         def jsonContent = new JsonSlurper().parseText(response.andReturn().response.getContentAsString())
         jsonContent.consent == "INITIATED"
@@ -82,12 +86,14 @@ class UserConsentServiceSpec extends Specification {
 
         def sortCode = "010616"
         def accountNumber = "00005000"
+        def fromDate = LocalDate.of(2017,1,1)
+        def toDate = LocalDate.of(2017,1,28)
         def dob = LocalDate.of(2000,1,1)
 
-        1 * mockBarclaysBankService.checkUserConsent(_, _, _) >> new UserConsent(sortCode, accountNumber, dob.toString(), new UserConsentResult("PENDING", "PENDING"))
+        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode+accountNumber, sortCode, accountNumber, fromDate, toDate, new UserConsentResult("PENDING", "PENDING"))
 
         expect:
-        def response = callApi(sortCode,accountNumber,dob)
+        def response = callApi(sortCode,accountNumber,fromDate,toDate,dob)
         response.andExpect(status().is(200))
         def jsonContent = new JsonSlurper().parseText(response.andReturn().response.getContentAsString())
         jsonContent.consent == "PENDING"
@@ -98,12 +104,14 @@ class UserConsentServiceSpec extends Specification {
 
         def sortCode = "010616"
         def accountNumber = "00005000"
+        def fromDate = LocalDate.of(2017,1,1)
+        def toDate = LocalDate.of(2017,1,28)
         def dob = LocalDate.of(2000,1,1)
 
-        1 * mockBarclaysBankService.checkUserConsent(_, _, _) >> new UserConsent(sortCode, accountNumber, dob.toString(), new UserConsentResult("SUCCESS", "SUCCESS"))
+        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode+accountNumber, sortCode, accountNumber, fromDate, toDate, new UserConsentResult("SUCCESS", "SUCCESS"))
 
         expect:
-        def response = callApi(sortCode,accountNumber,dob)
+        def response = callApi(sortCode,accountNumber,fromDate, toDate, dob)
         response.andExpect(status().is(200))
         def jsonContent = new JsonSlurper().parseText(response.andReturn().response.getContentAsString())
         jsonContent.consent == "SUCCESS"
@@ -114,12 +122,14 @@ class UserConsentServiceSpec extends Specification {
 
         def sortCode = "010616"
         def accountNumber = "00005000"
+        def fromDate = LocalDate.of(2017,1,1)
+        def toDate = LocalDate.of(2017,1,28)
         def dob = LocalDate.of(2000,1,1)
 
-        1 * mockBarclaysBankService.checkUserConsent(_, _, _) >> new UserConsent(sortCode, accountNumber, dob.toString(), new UserConsentResult("FAILURE", "FAILURE"))
+        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode+accountNumber, sortCode, accountNumber, fromDate, toDate, new UserConsentResult("FAILURE", "FAILURE"))
 
         expect:
-        def response = callApi(sortCode,accountNumber,dob)
+        def response = callApi(sortCode,accountNumber,fromDate,toDate,dob)
         response.andExpect(status().is(200))
         def jsonContent = new JsonSlurper().parseText(response.andReturn().response.getContentAsString())
         jsonContent.consent == "FAILURE"
@@ -130,12 +140,14 @@ class UserConsentServiceSpec extends Specification {
 
         def sortCode = "010616"
         def accountNumber = "00005000"
+        def fromDate = LocalDate.of(2017,1,1)
+        def toDate = LocalDate.of(2017,1,28)
         def dob = LocalDate.of(2000,1,1)
 
-        1 * mockBarclaysBankService.checkUserConsent(_, _, _) >> new UserConsent(sortCode, accountNumber, dob.toString(), new UserConsentResult("INVALID", "INVALID"))
+        1 * mockBarclaysBankService.checkUserConsent(_, _, _, _, _) >> new UserConsent(sortCode+accountNumber, sortCode, accountNumber, fromDate, toDate, new UserConsentResult("INVALID", "INVALID"))
 
         expect:
-        def response = callApi(sortCode,accountNumber,dob)
+        def response = callApi(sortCode,accountNumber,fromDate,toDate,dob)
         response.andExpect(status().is(200))
         def jsonContent = new JsonSlurper().parseText(response.andReturn().response.getContentAsString())
         jsonContent.consent == "INVALID"
