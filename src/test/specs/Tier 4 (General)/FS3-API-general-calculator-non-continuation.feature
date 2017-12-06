@@ -93,7 +93,7 @@ Feature: Total Funds Required Calculation - Initial Tier 4 (General) Student gen
 
 
     Scenario: Stuart is on an initial 13 months main course and does not have dependants. Stuart's maintenance threshold amount calculated.
-
+        ### (Why is this 9 months, this should show the full duration)
         Given A Service is consuming the FSPS Calculator API
         When the FSPS Calculator API is invoked with the following
             | Course type       | main       |
@@ -103,7 +103,7 @@ Feature: Total Funds Required Calculation - Initial Tier 4 (General) Student gen
         Then The Financial Status API provides the following results:
             | HTTP Status    | 200        |
             | Threshold      | 13085.50   |
-            | Course Length  | 09         |### (Why is this 9 months, this should show the full duration)
+            | Course Length  | 09         |
             | Leave end date | 2017-05-03 |
 
         ####New Scenario 05/07/2017 - rounding dates
@@ -114,8 +114,8 @@ Feature: Total Funds Required Calculation - Initial Tier 4 (General) Student gen
         When the FSPS Calculator API is invoked with the following
             | Course type       | main       |
             | Dependants        | 0          |
-            | Course start date | 2017-01-01 | ###
-            | Course end date   | 2017-07-03 | ####
+            | Course start date | 2017-01-01 |
+            | Course end date   | 2017-07-03 |
         Then The Financial Status API provides the following results:
             | HTTP Status    | 200        |
             | Threshold      | 13085.50   |
