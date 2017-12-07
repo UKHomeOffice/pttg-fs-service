@@ -75,7 +75,7 @@ class GeneralConditionCodesCalculator extends ConditionCodesCalculator {
           (courseStartDate, courseEndDate) match {
             case (Some(start), Some(end)) =>
               val courseLengthInMonths = CourseLengthCalculator.differenceInMonths(start, end)
-              if (courseLengthInMonths >= 12) Valid(Some(PartnerConditionCode("4B")))
+              if (courseLengthInMonths >= 12) Valid(Some(PartnerConditionCode("4C")))
               else Valid(Some(PartnerConditionCode("3")))
             case (None, None) => Invalid(ConditionCodesParameterError("Missing course start and end date"))
             case (None, _) => Invalid(ConditionCodesParameterError("Missing course start date"))
@@ -90,7 +90,7 @@ class GeneralConditionCodesCalculator extends ConditionCodesCalculator {
     def calculateChildConditionCode(): Option[ChildConditionCode] = dependants match {
       case None => None
       case Some(noOfDeps) if noOfDeps == 0 => None
-      case _ => Some(ChildConditionCode("1"))
+      case _ => Some(ChildConditionCode("1B"))
     }
 
     val applicantResult: Validated[ConditionCodesParameterError, Option[ApplicantConditionCode]] = calculateApplicantConditionCode()
@@ -128,13 +128,13 @@ class OtherNonGeneralConditionCodesCalculator(studentType: StudentType) extends 
 
     def calculatePartnerConditionCode(): Option[PartnerConditionCode] = dependants match {
       case None | Some(0) => None
-      case _ => Some(PartnerConditionCode("4B"))
+      case _ => Some(PartnerConditionCode("4C"))
     }
 
 
     def calculateChildConditionCode(): Option[ChildConditionCode] = dependants match {
       case None | Some(0) => None
-      case _ => Some(ChildConditionCode("1"))
+      case _ => Some(ChildConditionCode("1B"))
     }
 
     calculateApplicantConditionCode() match {

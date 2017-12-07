@@ -30,8 +30,8 @@ Feature: Calculation of condition codes for T4 Doctorate Extension Scheme
             | Dependants      | 2   |
         Then The Financial Status API provides the following results:
             | applicantConditionCode | 4E |
-            | partnerConditionCode   | 4B |
-            | childConditionCode     | 1  |
+            | partnerConditionCode   | 4C |
+            | childConditionCode     | 1B |
 
 ################# dependants only   #######################
 
@@ -43,5 +43,5 @@ Feature: Calculation of condition codes for T4 Doctorate Extension Scheme
             | Dependants only | Yes |
             | Dependants      | 1   |
         Then The Financial Status API provides the following results:
-            | partnerConditionCode | 4B |
-            | childConditionCode   | 1  |
+            | partnerConditionCode | 4C |
+            | childConditionCode   | 1B |

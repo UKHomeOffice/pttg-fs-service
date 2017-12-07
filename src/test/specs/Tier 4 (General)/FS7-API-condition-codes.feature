@@ -43,7 +43,7 @@ Feature: Calculation of condition codes for T4 General
         Then The Financial Status API provides the following results:
             | Applicant Condition Code | 2 |
             | Partner Condition Code   | 3 |
-            | Child Condition Code     | 1 |
+            | Child Condition Code     | 1B |
 
 ################# Main course degree or higher at HEI - with dependants - 12 months or greater #######################
 
@@ -60,8 +60,8 @@ Feature: Calculation of condition codes for T4 General
             | Course end date    | 2017-01-03                   |
         Then The Financial Status API provides the following results:
             | Applicant Condition Code | 2  |
-            | Partner Condition Code   | 4B |
-            | Child Condition Code     | 1  |
+            | Partner Condition Code   | 4C |
+            | Child Condition Code     | 1B  |
 
 ################# Pre Sessional course at HEI - applicant only  #######################
 
@@ -95,7 +95,7 @@ Feature: Calculation of condition codes for T4 General
         Then The Financial Status API provides the following results:
             | Applicant Condition Code | 2A |
             | Partner Condition Code   | 3  |
-            | Child Condition Code     | 1  |
+            | Child Condition Code     | 1B  |
 
 ################# Main course below degree at HEI - applicant only  #######################
 
@@ -129,7 +129,7 @@ Feature: Calculation of condition codes for T4 General
         Then The Financial Status API provides the following results:
             | Applicant Condition Code | 2A |
             | Partner Condition Code   | 3  |
-            | Child Condition Code     | 1  |
+            | Child Condition Code     | 1B  |
 
 ################# Main course degree or higher at Other Institution - applicant only #######################
 
@@ -163,7 +163,7 @@ Feature: Calculation of condition codes for T4 General
         Then The Financial Status API provides the following results:
             | Applicant Condition Code | 3 |
             | Partner Condition Code   | 3 |
-            | Child Condition Code     | 1 |
+            | Child Condition Code     | 1B |
 
 ################# Main course degree or higher at Other Institution - with dependants - greater than 12 months #######################
 
@@ -180,8 +180,8 @@ Feature: Calculation of condition codes for T4 General
             | Course end date    | 2017-01-03                   |
         Then The Financial Status API provides the following results:
             | Applicant Condition Code | 3  |
-            | Partner Condition Code   | 4B |
-            | Child Condition Code     | 1  |
+            | Partner Condition Code   | 4C |
+            | Child Condition Code     | 1B  |
 
 ################# Pre Sessional course at Other Institution - applicant only  #######################
 
@@ -216,7 +216,7 @@ Feature: Calculation of condition codes for T4 General
         Then The Financial Status API provides the following results:
             | Applicant Condition Code | 3 |
             | Partner Condition Code   | 3 |
-            | Child Condition Code     | 1 |
+            | Child Condition Code     | 1B |
 
 ################# Main course below degree at Other Institution - applicant only  #######################
 
@@ -251,7 +251,7 @@ Feature: Calculation of condition codes for T4 General
         Then The Financial Status API provides the following results:
             | Applicant Condition Code | 3 |
             | Partner Condition Code   | 3 |
-            | Child Condition Code     | 1 |
+            | Child Condition Code     | 1B |
 
 ################# Main course degree or higher at HEI - Dependant only - less than 12 months  #######################
 
@@ -268,7 +268,7 @@ Feature: Calculation of condition codes for T4 General
             | Course end date    | 2016-07-03                   |
         Then The Financial Status API provides the following results:
             | Applicant Condition Code | 3 |
-            | Child Condition Code     | 1 |
+            | Child Condition Code     | 1B |
 
 ################# Main course degree or higher at HEI - dependant only - greater than 12 months  #######################
 
@@ -284,7 +284,7 @@ Feature: Calculation of condition codes for T4 General
             | Course start date  | 2016-01-03                   |
             | Course end date    | 2017-01-03                   |
         Then The Financial Status API provides the following results:
-            | Partner Condition Code | 4B |
+            | Partner Condition Code | 4C |
             | Child Condition Code   | 1  |
 
 ################# Pre Sessional course at HEI - dependant only #######################
@@ -302,7 +302,7 @@ Feature: Calculation of condition codes for T4 General
             | Course end date    | 2016-10-10             |
         Then The Financial Status API provides the following results:
             | Partner Condition Code | 3 |
-            | Child Condition Code   | 1 |
+            | Child Condition Code   | 1B |
 
 ################# Main course below degree at HEI - dependant only  #######################
 
@@ -319,7 +319,7 @@ Feature: Calculation of condition codes for T4 General
             | Course end date    | 2016-10-10               |
         Then The Financial Status API provides the following results:
             | Partner Condition Code | 3 |
-            | Child Condition Code   | 1 |
+            | Child Condition Code   | 1B |
 
 ################# Main course degree or higher at Other Institution - with dependants - less than 12 months #######################
 
@@ -336,7 +336,7 @@ Feature: Calculation of condition codes for T4 General
             | Course end date    | 2016-10-10                   |
         Then The Financial Status API provides the following results:
             | Partner Condition Code | 3 |
-            | Child Condition Code   | 1 |
+            | Child Condition Code   | 1B |
 
 ################ Main course degree or higher at Other Institution - with dependants - greater than 12 months #######################
 
@@ -351,7 +351,7 @@ Feature: Calculation of condition codes for T4 General
             | Course start date  | 2016-01-03                   |
             | Course end date    | 2017-01-03                   |
         Then The Financial Status API provides the following results:
-            | Partner Condition Code | 4B |
+            | Partner Condition Code | 4C |
             | Child Condition Code   | 1  |
 
 ################# Pre Sessional course at Other Institution - dependant only #######################
@@ -369,7 +369,7 @@ Feature: Calculation of condition codes for T4 General
             | Course end date    | 2016-10-10        |
         Then The Financial Status API provides the following results:
             | Partner Condition Code | 3 |
-            | Child Condition Code   | 1 |
+            | Child Condition Code   | 1B |
 
 ################# Main course below degree at Other Institution - dependant only #######################
 
@@ -386,4 +386,4 @@ Feature: Calculation of condition codes for T4 General
             | Course end date    | 2016-10-10               |
         Then The Financial Status API provides the following results:
             | Partner Condition Code | 3 |
-            | Child Condition Code   | 1 |
+            | Child Condition Code   | 1B |

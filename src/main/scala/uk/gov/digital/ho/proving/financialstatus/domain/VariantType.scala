@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service
 import uk.gov.digital.ho.proving.financialstatus.api.configuration.VariantTypeException
 
 @Service
-class VariantTypeChecker @Autowired() (@Value("${t5.youth.mobility.variant}") val t5YouthMobilityVariant: String) {
+class VariantTypeChecker @Autowired() (@Value("${t5.youth.mobility.variant}") val t5YouthMobilityVariant: String,
+                                       @Value("${t5.youth.temporary.variant}") val t5YouthTemporaryVariant: String) {
 
   private val T5_YOUTH_MOBILITY = t5YouthMobilityVariant
+  private val T5_YOUTH_TEMPORARY = t5YouthTemporaryVariant
 
-  val values = Vector(T5_YOUTH_MOBILITY)
+  val values = Vector(T5_YOUTH_MOBILITY, T5_YOUTH_TEMPORARY)
 
   def getVariantType(javaRawVariantTypeOptional: Optional[String], applicantType: ApplicantType): Option[VariantType] = {
 
@@ -31,6 +33,9 @@ class VariantTypeChecker @Autowired() (@Value("${t5.youth.mobility.variant}") va
         }
         T5YouthMobilityVariant
       }
+      case T5_YOUTH_TEMPORARY => {
+        T5YouthTemporaryVariant
+      }
       case _ => throw VariantTypeException("Invalid variant type: " + rawVariantType)
     }
   }
@@ -38,9 +43,11 @@ class VariantTypeChecker @Autowired() (@Value("${t5.youth.mobility.variant}") va
   def getApplicantTypeName(variantType: VariantType): String = {
     variantType match {
       case T5YouthMobilityVariant => T5_YOUTH_MOBILITY
+      case T5YouthTemporaryVariant => T5_YOUTH_TEMPORARY
     }
   }
 }
 
 sealed trait VariantType
 case object T5YouthMobilityVariant extends VariantType
+case object T5YouthTemporaryVariant extends VariantType

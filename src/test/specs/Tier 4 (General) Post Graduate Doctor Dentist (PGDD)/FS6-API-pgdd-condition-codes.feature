@@ -30,8 +30,8 @@ Feature: Calculation of condition codes for T4 Post Graduate Doctor Dentist
             | Dependants      | 5    |
         Then The Financial Status API provides the following results:
             | applicantConditionCode | 2  |
-            | partnerConditionCode   | 4B |
-            | childConditionCode     | 1  |
+            | partnerConditionCode   | 4C |
+            | childConditionCode     | 1B |
 
 ################# dependant only   #######################
 
@@ -43,5 +43,5 @@ Feature: Calculation of condition codes for T4 Post Graduate Doctor Dentist
             | Dependants only | Yes  |
             | Dependants      | 1    |
         Then The Financial Status API provides the following results:
-            | partnerConditionCode | 4B |
-            | childConditionCode   | 1  |
+            | partnerConditionCode | 4C |
+            | childConditionCode   | 1B |

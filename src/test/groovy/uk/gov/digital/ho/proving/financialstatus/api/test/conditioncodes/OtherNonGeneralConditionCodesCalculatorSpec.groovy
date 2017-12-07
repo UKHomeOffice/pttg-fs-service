@@ -77,8 +77,8 @@ class OtherNonGeneralConditionCodesCalculatorSpec extends Specification {
 
         def expectedConditionCodes = new Validated.Valid(new ConditionCodesCalculationResult(
             new Some<ApplicantConditionCode>(new ApplicantConditionCode("4E")),
-            new Some<PartnerConditionCode>(new PartnerConditionCode("4B")),
-            new Some<ChildConditionCode>(new ChildConditionCode("1"))
+            new Some<PartnerConditionCode>(new PartnerConditionCode("4C")),
+            new Some<ChildConditionCode>(new ChildConditionCode("1B"))
         ))
 
         assert expectedConditionCodes == result
@@ -102,8 +102,8 @@ class OtherNonGeneralConditionCodesCalculatorSpec extends Specification {
 
         def expectedConditionCodes = new Validated.Valid(new ConditionCodesCalculationResult(
             None$.MODULE$,
-            new Some<PartnerConditionCode>(new PartnerConditionCode("4B")),
-            new Some<ChildConditionCode>(new ChildConditionCode("1"))
+            new Some<PartnerConditionCode>(new PartnerConditionCode("4C")),
+            new Some<ChildConditionCode>(new ChildConditionCode("1B"))
         ))
 
         assert expectedConditionCodes == result
@@ -177,8 +177,8 @@ class OtherNonGeneralConditionCodesCalculatorSpec extends Specification {
 
         def expectedConditionCodes = new Validated.Valid(new ConditionCodesCalculationResult(
             new Some<ApplicantConditionCode>(new ApplicantConditionCode("2")),
-            new Some<PartnerConditionCode>(new PartnerConditionCode("4B")),
-            new Some<ChildConditionCode>(new ChildConditionCode("1"))
+            new Some<PartnerConditionCode>(new PartnerConditionCode("4C")),
+            new Some<ChildConditionCode>(new ChildConditionCode("1B"))
         ))
 
         assert expectedConditionCodes == result
@@ -202,8 +202,8 @@ class OtherNonGeneralConditionCodesCalculatorSpec extends Specification {
 
         def expectedConditionCodes = new Validated.Valid(new ConditionCodesCalculationResult(
             None$.MODULE$,
-            new Some<PartnerConditionCode>(new PartnerConditionCode("4B")),
-            new Some<ChildConditionCode>(new ChildConditionCode("1"))
+            new Some<PartnerConditionCode>(new PartnerConditionCode("4C")),
+            new Some<ChildConditionCode>(new ChildConditionCode("1B"))
         ))
 
         assert expectedConditionCodes == result
@@ -277,8 +277,8 @@ class OtherNonGeneralConditionCodesCalculatorSpec extends Specification {
 
         def expectedConditionCodes = new Validated.Valid(new ConditionCodesCalculationResult(
             new Some<ApplicantConditionCode>(new ApplicantConditionCode("2")),
-            new Some<PartnerConditionCode>(new PartnerConditionCode("4B")),
-            new Some<ChildConditionCode>(new ChildConditionCode("1"))
+            new Some<PartnerConditionCode>(new PartnerConditionCode("4C")),
+            new Some<ChildConditionCode>(new ChildConditionCode("1B"))
         ))
 
         assert expectedConditionCodes == result
@@ -302,8 +302,8 @@ class OtherNonGeneralConditionCodesCalculatorSpec extends Specification {
 
         def expectedConditionCodes = new Validated.Valid(new ConditionCodesCalculationResult(
             None$.MODULE$,
-            new Some<PartnerConditionCode>(new PartnerConditionCode("4B")),
-            new Some<ChildConditionCode>(new ChildConditionCode("1"))
+            new Some<PartnerConditionCode>(new PartnerConditionCode("4C")),
+            new Some<ChildConditionCode>(new ChildConditionCode("1B"))
         ))
 
         assert expectedConditionCodes == result

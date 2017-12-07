@@ -33,8 +33,8 @@ Feature: Calculation of condition codes for T4 Student Union Sabbatical Officer
             | Dependants      | 3    |
         Then The Financial Status API provides the following results:
             | applicantConditionCode | 2  |
-            | partnerConditionCode   | 4B |
-            | childConditionCode     | 1  |
+            | partnerConditionCode   | 4C |
+            | childConditionCode     | 1B |
 
 ################# dependant only   #######################
 
@@ -46,6 +46,6 @@ Feature: Calculation of condition codes for T4 Student Union Sabbatical Officer
             | Dependants only | Yes  |
             | Dependants      | 1    |
         Then The Financial Status API provides the following results:
-            | partnerConditionCode | 4B |
-            | childConditionCode   | 1  |
+            | partnerConditionCode | 4C |
+            | childConditionCode   | 1B |
 
