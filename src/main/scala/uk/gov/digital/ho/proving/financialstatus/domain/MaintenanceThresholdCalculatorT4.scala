@@ -123,7 +123,6 @@ class MaintenanceThresholdCalculatorT4 @Autowired()(val clock: Clock,
     }
   }
 
-
   def calculatePostGraduateDoctorDentist(innerLondon: Boolean,
                                          accommodationFeesPaid: BigDecimal,
                                          dependants: Int,
@@ -136,7 +135,7 @@ class MaintenanceThresholdCalculatorT4 @Autowired()(val clock: Clock,
 
 
     val courseLengthInMonths = maintenancePeriod(courseStartDate, courseEndDate)
-    val leaveToRemain = LeaveToRemainCalculator.calculateFixedLeaveToRemain(courseEndDate, Period.ofMonths(1))
+    val leaveToRemain = LeaveToRemainCalculator.calculateFixedLeaveToRemain(clock, courseEndDate, Period.ofMonths(1))
     val leaveToRemainInMonths = maintenancePeriod(courseStartDate, leaveToRemain)
 
     val (courseLength, courseLengthCapped) = if (courseLengthInMonths > susoCappedCourseLength) {
