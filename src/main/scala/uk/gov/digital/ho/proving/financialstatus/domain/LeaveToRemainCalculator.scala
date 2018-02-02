@@ -56,10 +56,10 @@ object LeaveToRemainCalculator {
   }
 
   def calculateLeaveToRemain(clock: Clock,
-                             courseStartDate: LocalDate,
+                              courseStartDate: LocalDate,
                               courseEndDate: LocalDate,
-                              originalCourseStartDate:
-                              Option[LocalDate], preSessional: Boolean): LocalDate = {
+                              originalCourseStartDate: Option[LocalDate],
+                              preSessional: Boolean): LocalDate = {
 
     val startDate = originalCourseStartDate match {
       case Some(originalStart) => originalStart
@@ -81,8 +81,19 @@ object LeaveToRemainCalculator {
     endDate.plus(wrapUpPeriod)
   }
 
-  def calculateFixedLeaveToRemain(courseEndDate: LocalDate, period: Period): LocalDate = {
-    courseEndDate.plus(period)
+  def calculateFixedLeaveToRemain(clock: Clock,
+                                  courseEndDate: LocalDate,
+                                  period: Period): LocalDate = {
+
+    val considerationDate = LocalDate.now(clock)
+
+    val endDate = if (courseEndDate.isBefore(considerationDate)) {
+      considerationDate
+    } else {
+      courseEndDate
+    }
+
+    endDate.plus(period)
   }
 
 }
