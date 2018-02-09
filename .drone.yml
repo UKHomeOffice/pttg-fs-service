@@ -24,7 +24,7 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     secrets:
-      - DOCKER_PASSWORD
+      - docker_password
     commands:
       - env
       - docker login -u="ukhomeofficedigital+pttg" -p=$${DOCKER_PASSWORD} quay.io
