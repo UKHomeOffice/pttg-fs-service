@@ -9,12 +9,12 @@ pipeline:
       - ./gradlew build
     when:
      event: [push, pull_request, tag]
-  
+
   docker-build:
     privileged: true
-    image: docker:1.11
+    image: docker:17.09.1
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
       - docker build -t pttg-fs-service .
     when:
