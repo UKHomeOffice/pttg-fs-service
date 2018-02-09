@@ -26,7 +26,7 @@ pipeline:
     secrets:
       - docker_password
     commands:
-      - echo "about to do docker login with DOCKER_PASSWORD=${DOCKER_PASSWORD}"
+      - echo "about to do docker login with DOCKER_PASSWORD=$${DOCKER_PASSWORD}"
       - docker login -u="ukhomeofficedigital+pttg" -p=$${DOCKER_PASSWORD} quay.io
       - docker tag pttg-fs-service quay.io/ukhomeofficedigital/pttg-fs-service:build-$${DRONE_BUILD_NUMBER}
       - docker push quay.io/ukhomeofficedigital/pttg-fs-service:build-$${DRONE_BUILD_NUMBER}
