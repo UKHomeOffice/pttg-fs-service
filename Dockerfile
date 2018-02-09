@@ -1,5 +1,4 @@
-FROM quay.io/ukhomeofficedigital/openjdk8:v1.8.0.131
-
+FROM quay.io/ukhomeofficedigital/openjdk8:v1.8.0.151
 
 ENV USER user_pttg_fs_service
 ENV GROUP group_pttg_fs_service
