@@ -57,7 +57,7 @@ pipeline:
     environment:
       - KUBE_NAMESPACE=pttg-fs-dev
       - ENVIRONMENT=dev
-      - VERSION=build-$${DRONE_BUILD_NUMBER}
+      - VERSION=build-${DRONE_BUILD_NUMBER}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
       - kube_token
