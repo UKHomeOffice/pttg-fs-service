@@ -24,6 +24,7 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
+      - echo "about to do docker login with DOCKER_PASSWORD=${DOCKER_PASSWORD} - originally DOCKER_PASSWORD=$${DOCKER_PASSWORD}"
       - docker login -u="ukhomeofficedigital+pttg" -p=${DOCKER_PASSWORD} quay.io
       - docker tag pttg-fs-service quay.io/ukhomeofficedigital/pttg-fs-service:build-${DRONE_BUILD_NUMBER}
       - docker push quay.io/ukhomeofficedigital/pttg-fs-service:build-${DRONE_BUILD_NUMBER}
