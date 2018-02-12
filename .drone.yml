@@ -53,7 +53,7 @@ pipeline:
       event: [push, tag, deployment]
 
   deploy-to-dev-from-build-number:
-    image: quay.io/ukhomeofficedigital/kd:v0.5.0
+    image: quay.io/ukhomeofficedigital/kd:v0.8.0
     environment:
       - KUBE_NAMESPACE=pttg-fs-dev
       - ENVIRONMENT=dev
