@@ -1,17 +1,13 @@
 package uk.gov.digital.ho.proving.financialstatus.audit.configuration
 
 import com.mongodb.MongoClient
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.beans.factory.annotation.{Autowired, Value}
 import org.springframework.boot.actuate.audit.AuditEventRepository
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.{Bean, Configuration}
 import org.springframework.data.mongodb.MongoDbFactory
-import org.springframework.data.mongodb.core.MongoOperations
-import org.springframework.data.mongodb.core.MongoTemplate
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory
+import org.springframework.data.mongodb.core.{MongoOperations, MongoTemplate, SimpleMongoDbFactory}
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
-import uk.gov.digital.ho.proving.financialstatus.audit.MongoAuditEventRepository
+import uk.gov.digital.ho.proving.financialstatus.audit.JsonLoggingNonPersistentAuditEventRepository
 
 @Configuration
 @EnableMongoRepositories
@@ -36,7 +32,8 @@ class AuditConfiguration {
   @Autowired
   @Bean
   def auditEventRepository(mongoOperations: MongoOperations): AuditEventRepository =
-    new MongoAuditEventRepository(mongoOperations, auditingCollectionName)
+//    new MongoAuditEventRepository(mongoOperations, auditingCollectionName)
+    new JsonLoggingNonPersistentAuditEventRepository()
 
 }
 case class DeploymentDetails(deploymentName: String, deploymentNamespace: String)
