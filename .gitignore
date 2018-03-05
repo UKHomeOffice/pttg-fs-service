@@ -1,8 +1,6 @@
-.idea
-.DS_Store
-target/
+.gradle/
+.idea/
 build/
 financial-status-service-api.log
 out/
-.gradle/
-pttg-fs-service.iml
+target/site/
