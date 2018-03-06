@@ -7,7 +7,7 @@ import org.springframework.context.annotation.{Bean, Configuration}
 import org.springframework.data.mongodb.MongoDbFactory
 import org.springframework.data.mongodb.core.{MongoOperations, MongoTemplate, SimpleMongoDbFactory}
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
-import uk.gov.digital.ho.proving.financialstatus.audit.JsonLoggingNonPersistentAuditEventRepository
+import uk.gov.digital.ho.proving.financialstatus.audit.{JsonLoggingNonPersistentAuditEventRepository, MongoAuditEventRepository}
 
 @Configuration
 @EnableMongoRepositories
@@ -32,7 +32,7 @@ class AuditConfiguration {
   @Autowired
   @Bean
   def auditEventRepository(mongoOperations: MongoOperations): AuditEventRepository =
-//    new MongoAuditEventRepository(mongoOperations, auditingCollectionName)
+    new MongoAuditEventRepository(mongoOperations, auditingCollectionName)
     new JsonLoggingNonPersistentAuditEventRepository()
 
 }

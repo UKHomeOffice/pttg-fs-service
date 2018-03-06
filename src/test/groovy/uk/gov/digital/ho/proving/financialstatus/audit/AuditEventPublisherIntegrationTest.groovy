@@ -1,6 +1,9 @@
 package uk.gov.digital.ho.proving.financialstatus.audit
 
 import com.mongodb.MongoClient
+import com.mongodb.client.MongoCollection
+import com.mongodb.client.MongoDatabase
+import org.bson.Document
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.actuate.audit.listener.AuditApplicationEvent
@@ -31,23 +34,23 @@ class AuditEventPublisherIntegrationTest extends Specification {
     @Value('${auditing.mongodb.collectionName}') String collectionName
 
     def 'published events are written to Mongo'() {
-//        given:
-//        def auditApplicationEvent = createAuditApplicationEvent()
-//
-//        when:
-//        underTest.publishEvent(auditApplicationEvent)
-//
-//        then:
-//        println()
-//        MongoDatabase database = mongoClient.getDatabase(databaseName)
-//        MongoCollection<Document> collection = database.getCollection(collectionName)
-//        collection.count() == 1L
-//        Document document = collection.find().first()
-//        document.getString("timestamp") == expectedTimestampString
-//        document.getString("principal") == expectedPrincipal
-//        document.getString("type") == expectedType
-//        Map<String, String> actualData = document.get("data", Map.class)
-//        actualData == expectedData
+        given:
+        def auditApplicationEvent = createAuditApplicationEvent()
+
+        when:
+        underTest.publishEvent(auditApplicationEvent)
+
+        then:
+        println()
+        MongoDatabase database = mongoClient.getDatabase(databaseName)
+        MongoCollection<Document> collection = database.getCollection(collectionName)
+        collection.count() == 1L
+        Document document = collection.find().first()
+        document.getString("timestamp") == expectedTimestampString
+        document.getString("principal") == expectedPrincipal
+        document.getString("type") == expectedType
+        Map<String, String> actualData = document.get("data", Map.class)
+        actualData == expectedData
     }
 
     private static final expectedType = "some expectedType"
