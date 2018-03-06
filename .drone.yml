@@ -31,7 +31,6 @@ pipeline:
       branch: master
       event: push
 
-
   tag-docker-image-with-git-tag:
     image: docker:17.09.1
     environment:
