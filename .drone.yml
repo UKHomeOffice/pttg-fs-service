@@ -67,7 +67,7 @@ pipeline:
       branch: master
       event: [push, tag]
 
-  deployment-to-test-from-dev:
+  deployment:
     image: quay.io/ukhomeofficedigital/kd:v0.8.0
     environment:
       - KUBE_NAMESPACE=pttg-fs-${DRONE_DEPLOY_TO}
@@ -75,8 +75,12 @@ pipeline:
       - VERSION=${IMAGE_VERSION}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
+      - pttg_fs_dev
       - pttg_fs_test
     commands:
+      - echo "IMAGE_VERSION is ${IMAGE_VERSION}"
+      - echo "VERSION is ${VERSION}"
+      - echo "TIM is ${TIM}"
       - cd kube-pttg-fs-service
       - ./deploy.sh
     when:
