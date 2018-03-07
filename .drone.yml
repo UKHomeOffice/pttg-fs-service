@@ -78,6 +78,9 @@ pipeline:
       - pttg_fs_dev
       - pttg_fs_test
     commands:
+      - echo "IMAGE_VERSION is ${IMAGE_VERSION}"
+      - echo "VERSION is ${VERSION}"
+      - echo "TIM is ${TIM}"
       - cd kube-pttg-fs-service
       - ./deploy.sh
     when:
