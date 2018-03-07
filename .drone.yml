@@ -59,7 +59,7 @@ pipeline:
       - VERSION=build-${DRONE_BUILD_NUMBER}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
-      - kube_token
+      - pttg_fs_dev
     commands:
       - cd kube-pttg-fs-service
       - ./deploy.sh
@@ -75,7 +75,8 @@ pipeline:
       - VERSION=${IMAGE_VERSION}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
-      - kube_token
+      - pttg_fs_dev
+      - pttg_fs_test
     commands:
       - cd kube-pttg-fs-service
       - ./deploy.sh
@@ -92,7 +93,7 @@ pipeline:
       - KUBE_SERVER=https://kube-api-prod.prod.acp.homeoffice.gov.uk
       - WHITELIST=62.25.109.196/24
     secrets:
-      - kube_token
+      - pttg_fs_prod
     commands:
       - cd kube-pttg-fs-service
       - ./deploy.sh
