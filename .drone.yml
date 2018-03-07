@@ -72,15 +72,12 @@ pipeline:
     environment:
       - KUBE_NAMESPACE=pttg-fs-${DRONE_DEPLOY_TO}
       - ENVIRONMENT=${DRONE_DEPLOY_TO}
-      - VERSION=${IMAGE_VERSION}
+      - VERSION=$${IMAGE_VERSION}
       - KUBE_SERVER=https://kube-api-notprod.notprod.acp.homeoffice.gov.uk
     secrets:
       - pttg_fs_dev
       - pttg_fs_test
     commands:
-      - echo "IMAGE_VERSION is ${IMAGE_VERSION}"
-      - echo "VERSION is ${VERSION}"
-      - echo "TIM is ${TIM}"
       - cd kube-pttg-fs-service
       - ./deploy.sh
     when:
