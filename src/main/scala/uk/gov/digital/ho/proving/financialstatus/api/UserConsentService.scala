@@ -69,7 +69,9 @@ class UserConsentService @Autowired()(val userConsentStatusChecker: UserConsentS
     auditSearchParams(auditEventId, cleanSortCode, accountNumber, userProfile)
 
     val response = Try {
+      LOGGER.debug("About to call checkConsent {} for account {} and sort code {}", userId, anon(accountNumber), sortCode.get())
       val consent = checkConsent(cleanSortCode, accountNumber, fromDate, toDate, dob, userId)
+      LOGGER.debug("Returned from call to checkConsent")
 
       consent match {
         case Some(result) => auditSearchResult(auditEventId, result.toString, userProfile)
