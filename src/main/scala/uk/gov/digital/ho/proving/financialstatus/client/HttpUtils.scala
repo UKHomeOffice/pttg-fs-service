@@ -2,6 +2,7 @@ package uk.gov.digital.ho.proving.financialstatus.client
 
 import java.util
 
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.{Autowired, Value}
 import org.springframework.http._
 import org.springframework.retry.backoff.FixedBackOffPolicy
@@ -18,6 +19,8 @@ class HttpUtils @Autowired()(rest: RestTemplate,
                              @Value("${retry.attempts}") maxAttempts: Int,
                              @Value("${retry.delay}") backOffPeriod: Long) {
 
+  private val LOGGER = LoggerFactory.getLogger(classOf[HttpUtils])
+
   private val emptyBody = ""
   private val retryTemplate = createRetryTemplate(maxAttempts, backOffPeriod)
 
@@ -32,7 +35,13 @@ class HttpUtils @Autowired()(rest: RestTemplate,
     defaultHeaders.add("userId", userId)
     defaultHeaders.add("requestId", requestId)
     val requestEntity = new HttpEntity[String](emptyBody, defaultHeaders)
+
+    LOGGER.debug("Send request to {}", url)
+
     val responseEntity = retryTemplate.execute(new RetryableCall(url, requestEntity))
+
+    LOGGER.debug("Received response from {} - {} - {}", url, responseEntity.getStatusCode, requestEntity.getBody)
+
     HttpClientResponse(responseEntity.getStatusCode, responseEntity.getBody)
   }
 
