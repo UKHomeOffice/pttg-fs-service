@@ -1,14 +1,14 @@
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder
 import ch.qos.logback.classic.filter.ThresholdFilter
-
+import net.logstash.logback.encoder.LogstashEncoder
 import static ch.qos.logback.classic.Level.*
 
 // Add a status listener to record the state of the logback configuration when the logging system is initialised.
 statusListener(OnConsoleStatusListener)
 
 appender("STDOUT", ConsoleAppender) {
-    encoder(PatternLayoutEncoder) {
-        pattern = "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    encoder(LogstashEncoder) {
+        includeCallerInfo = true
     }
 }
 
